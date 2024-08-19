@@ -8,6 +8,8 @@ return {
             vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
             vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
             vim.keymap.set('n', '<C-p>', builtin.git_files, {})
+            vim.keymap.set('n', '<leader>co', builtin.colorscheme, {})
+            vim.keymap.set('n', '<leader>of', builtin.oldfiles, {})
         end
     },
     {
@@ -22,6 +24,11 @@ return {
                 }
             })
             require("telescope").load_extension("ui-select")
+            require("telescope").setup({
+                pickers = {
+                    colorscheme = {enable_preview = true},
+                },
+            })
         end
     },
 }

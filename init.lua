@@ -30,4 +30,6 @@ require("lazy").setup("plugins")
 
 vim.o.clipboard = "unnamedplus"
 
-
+vim.keymap.set("n", "<leader>t", ":terminal<CR>", {})
+vim.keymap.set("n", "<leader>sp", ":sp<CR>", {})
+vim.keymap.set("n", "<leader>vsp", ":vsp<CR>", {})
