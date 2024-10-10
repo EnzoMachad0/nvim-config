@@ -6,7 +6,6 @@ vim.g.mapleader = " "
 vim.opt.number = true
 vim.opt.relativenumber = true
 
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -24,12 +23,18 @@ local opts = {}
 
 require("lazy").setup("plugins")
 
-
---vim.cmd[[colorscheme tokyonight-moon]]
-
-
 vim.o.clipboard = "unnamedplus"
 
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", {})
 vim.keymap.set("n", "<leader>sp", ":sp<CR>", {})
 vim.keymap.set("n", "<leader>vsp", ":vsp<CR>", {})
+vim.keymap.set('i', '<Esc>', '<Esc>', {})
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', {})
+vim.keymap.set('n', '<leader>cp', ':Copilot enable<CR>', {})
+vim.keymap.set('n', '<leader>ds', ':Copilot disable<CR>', {})
+
+vim.keymap.set('n', '<C-h>', '<C-w>h', {})
+vim.keymap.set('n', '<C-j>', '<C-w>j', {})
+vim.keymap.set('n', '<C-k>', '<C-w>k', {})
+vim.keymap.set('n', '<C-l>', '<C-w>l', {})
+
