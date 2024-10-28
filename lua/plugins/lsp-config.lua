@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "lua_ls", "harper_ls", "clangd", "templ",},
+                ensure_installed = { "gopls", "lua_ls", "harper_ls", "clangd", "templ",},
 
             })
         end
@@ -22,7 +22,22 @@ return {
             lspconfig.harper_ls.setup({})
             lspconfig.sqls.setup({})
             lspconfig.clangd.setup({})
-            lspconfig.gopls.setup({})
+            lspconfig.gopls.setup({
+                on_attach = on_attach,
+                capabilities = capabilities,
+                cmd = { "gopls" },
+                filetypes = { "go", "gomod", "gowork", "gotmpl" },
+                root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git", "."),
+                settings = {
+                    gopls = {
+                        completeUnimported = true,
+                        usePlaceholders = true,
+                        analyses = {
+                            unusedparams = true,
+                        }, 
+                    },
+                },
+            })
             lspconfig.templ.setup({})
 
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})

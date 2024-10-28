@@ -2,7 +2,9 @@
     "diagnostics.globals": [
         "vim",
         "null_ls",
-        "dashboard"
+        "dashboard",
+        "on_attach",
+        "capabilities"
     ],
     "diagnostics.disable": [
         "redundant-value",
