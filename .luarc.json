@@ -4,7 +4,8 @@
         "null_ls",
         "dashboard",
         "on_attach",
-        "capabilities"
+        "capabilities",
+        "autocmds"
     ],
     "diagnostics.disable": [
         "redundant-value",
