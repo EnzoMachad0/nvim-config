@@ -2,27 +2,43 @@ return {
     "nvimtools/none-ls.nvim",
     config = function()
         local null_ls = require("null-ls")
-        local augroup = vim.api.nvim_create_augroup("LspFormatting", {}) -- Corrigido para nvim_create_augroup
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
         null_ls.setup({
+            debug = true,
             sources = {
-                null_ls.builtins.formatting.stylua,
-                null_ls.builtins.formatting.goimports_reviser, -- Corrigido de bulitins para builtins
-                null_ls.builtins.formatting.gofumpt,
-                null_ls.builtins.formatting.prettier,
+                -- Configurando Stylua (Lua) para 4 espaços de indentação
+                null_ls.builtins.formatting.stylua.with({
+                    extra_args = { "--indent-width", "4", "--indent-type", "Spaces" },
+                }),
+
+                -- Configurando Prettier (JS, TS, HTML, CSS) para 4 espaços de indentação
+                null_ls.builtins.formatting.prettier.with({
+                    extra_args = { "--tab-width", "4", "--use-tabs", "false" },
+                }),
+
+                -- Configurando clang_format (C, C++) para 4 espaços de indentação
+                null_ls.builtins.formatting.clang_format.with({}),
+
+                -- O Black (Python) já usa indentação de 4 espaços por padrão
+                null_ls.builtins.formatting.black,
+
+                -- Outros linters e formatadores
                 null_ls.builtins.diagnostics.erb_lint,
                 null_ls.builtins.diagnostics.rubocop,
                 null_ls.builtins.formatting.rubocop,
-                null_ls.builtins.formatting.clang_format,
-                null_ls.builtins.formatting.black,
+                null_ls.builtins.formatting.goimports_reviser,
+                null_ls.builtins.formatting.gofumpt,
             },
+
             on_attach = function(client, bufnr)
                 if client.supports_method("textDocument/formatting") then
-                    vim.api.nvim_clear_autocmds({
-                        group = augroup,
-                        buffer = bufnr,
-                    })
+                    -- Limpar autocomandos existentes para evitar duplicação
+                    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+
+                    -- Criar um autocomando para formatar o buffer ao salvar
                     vim.api.nvim_create_autocmd("BufWritePre", {
-                        group = augroup, -- Corrigido de gorup para group
+                        group = augroup,
                         buffer = bufnr,
                         callback = function()
                             vim.lsp.buf.format({ bufnr = bufnr })
@@ -32,7 +48,7 @@ return {
             end,
         })
 
-        vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, {})
+        -- Mapeamento para formatar manualmente
+        vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, { noremap = true, silent = true })
     end,
 }
-

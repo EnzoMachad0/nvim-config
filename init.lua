@@ -24,6 +24,7 @@ local opts = {}
 require("lazy").setup("plugins")
 
 vim.o.clipboard = "unnamedplus"
+vim.g.copilot_auto_start = false
 
 vim.keymap.set("n", "<leader>t", ":terminal<CR>", {})
 vim.keymap.set("n", "<leader>sp", ":sp<CR>", {})

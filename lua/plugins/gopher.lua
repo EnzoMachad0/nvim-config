@@ -1,8 +1,9 @@
 return {
   {
     "olexsmir/gopher.nvim", -- Nome do repositório do plugin Gopher
-    dependencies = { -- Dependências do plugin
-      "nvim-lua/plenary.nvim", -- Plugin necessário para o funcionamento
+		dependencies = { -- Dependências do plugin
+			"nvim-lua/plenary.nvim", -- Plugin necessário para o funcionamento
+			"nvim-treesitter/nvim-treesitter",	
     },
     config = function()
       require("gopher").setup {
