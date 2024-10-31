@@ -9,8 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "gopls", "lua_ls", "harper_ls", "templ", "clangd", },
-
+                ensure_installed = { "gopls", "lua_ls", "harper_ls", "templ", "clangd" },
             })
         end
     },
@@ -18,16 +17,30 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
             local lspconfig = require("lspconfig")
-            lspconfig.lua_ls.setup({})
-            lspconfig.harper_ls.setup({})
-            lspconfig.sqls.setup({})
-            lspconfig.clangd.setup({
-                on_attach = function(client, bufnr)
-                    client.server_capabilities.signatureHelpProvider = false
-                    on_attach(client, bufnr)
-                    capabilities = capabilities
-                end,
 
+            -- Defina a função on_attach antes de usá-la
+            local on_attach = function(client, bufnr)
+                -- Desativa o provedor de ajuda de assinatura, se necessário
+                client.server_capabilities.signatureHelpProvider = false
+
+                -- Defina mapeamentos comuns para o LSP
+                local bufopts = { noremap = true, silent = true, buffer = bufnr }
+                vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+                vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+                vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, bufopts)
+            end
+
+            -- Defina as capabilities, se necessário
+            local capabilities = vim.lsp.protocol.make_client_capabilities()
+            capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
+
+            -- Configure os servidores LSP
+            lspconfig.lua_ls.setup({ on_attach = on_attach, capabilities = capabilities })
+            lspconfig.harper_ls.setup({ on_attach = on_attach, capabilities = capabilities })
+            lspconfig.sqls.setup({ on_attach = on_attach, capabilities = capabilities })
+            lspconfig.clangd.setup({
+                on_attach = on_attach, -- Use a função on_attach definida acima
+                capabilities = capabilities,
             })
             lspconfig.gopls.setup({
                 on_attach = on_attach,
@@ -45,11 +58,7 @@ return {
                     },
                 },
             })
-            lspconfig.templ.setup({})
-
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover, {})
-            vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {})
-            vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, {})
+            lspconfig.templ.setup({ on_attach = on_attach, capabilities = capabilities })
         end
     }
 }
