@@ -25,8 +25,6 @@ return {
 
                 -- Outros linters e formatadores
                 null_ls.builtins.diagnostics.erb_lint,
-                null_ls.builtins.diagnostics.rubocop,
-                null_ls.builtins.formatting.rubocop,
                 null_ls.builtins.formatting.goimports_reviser,
                 null_ls.builtins.formatting.gofumpt,
             },
