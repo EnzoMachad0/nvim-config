@@ -10,6 +10,7 @@
     "diagnostics.disable": [
         "redundant-value",
         "unused-local",
-        "duplicate-index"
+        "duplicate-index",
+        "undefined-doc-name"
     ]
 }

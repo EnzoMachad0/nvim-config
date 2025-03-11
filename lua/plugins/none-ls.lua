@@ -2,7 +2,7 @@ return {
     "nvimtools/none-ls.nvim",
     config = function()
         local null_ls = require("null-ls")
-        local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+        local augroup = vim.api.nvim_create_augroup("LspFormatting", { clear = true })
 
         null_ls.setup({
             debug = true,
@@ -30,7 +30,8 @@ return {
             },
 
             on_attach = function(client, bufnr)
-                if client.supports_method("textDocument/formatting") then
+                -- Evita erro de compatibilidade com versões mais recentes do Neovim
+                if client.supports_method and pcall(client.supports_method, client, "textDocument/formatting") then
                     -- Limpar autocomandos existentes para evitar duplicação
                     vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
 
@@ -39,7 +40,7 @@ return {
                         group = augroup,
                         buffer = bufnr,
                         callback = function()
-                            vim.lsp.buf.format({ bufnr = bufnr })
+                            pcall(vim.lsp.buf.format, { bufnr = bufnr })
                         end,
                     })
                 end
@@ -47,6 +48,8 @@ return {
         })
 
         -- Mapeamento para formatar manualmente
-        vim.keymap.set("n", "<leader>gf", vim.lsp.buf.format, { noremap = true, silent = true })
+        vim.keymap.set("n", "<leader>gf", function()
+            pcall(vim.lsp.buf.format, { async = true })
+        end, { noremap = true, silent = true })
     end,
 }

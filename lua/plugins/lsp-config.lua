@@ -9,7 +9,7 @@ return {
         "williamboman/mason-lspconfig.nvim",
         config = function()
             require("mason-lspconfig").setup({
-                ensure_installed = { "gopls", "lua_ls", "html", "cssls", "ts_ls", "clangd" },
+                ensure_installed = { "jdtls", "gopls", "lua_ls", "html", "cssls", "ts_ls", "clangd" },
             })
         end
     },

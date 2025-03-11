@@ -21,11 +21,11 @@ local function get_cmp_config()
             ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Confirmação com enter
         }),
         sources = cmp.config.sources({
-            { name = "nvim_lsp" },  -- Fonte do LSP
-            { name = "luasnip" },   -- Fonte de snippets
+            { name = "nvim_lsp" }, -- Fonte do LSP
+            { name = "luasnip" },  -- Fonte de snippets
         }, {
-            { name = "buffer" },    -- Fonte do buffer
-            { name = "path" },      -- Fonte de caminho de arquivos
+            { name = "buffer" },   -- Fonte do buffer
+            { name = "path" },     -- Fonte de caminho de arquivos
         }),
         formatting = {
             -- Configuração opcional de formatação das sugestões
@@ -46,12 +46,15 @@ end
 return {
     "hrsh7th/nvim-cmp",
     dependencies = {
-        { "hrsh7th/cmp-buffer" },        -- Sugestões de buffer
-        { "hrsh7th/cmp-path" },          -- Sugestões de caminho
-        { "hrsh7th/cmp-nvim-lsp" },      -- Sugestões com base no LSP
-        { "hrsh7th/cmp-nvim-lua" },      -- Sugestões para Lua no Neovim
-        { "saadparwaiz1/cmp_luasnip" },  -- Suporte para snippets
-        { "L3MON4D3/LuaSnip" },          -- Engine de snippets
+        { "hrsh7th/cmp-buffer" },       -- Sugestões de buffer
+        { "hrsh7th/cmp-path" },         -- Sugestões de caminho
+        { "hrsh7th/cmp-nvim-lsp" },     -- Sugestões com base no LSP
+        { "hrsh7th/cmp-nvim-lua" },     -- Sugestões para Lua no Neovim
+        { "saadparwaiz1/cmp_luasnip" }, -- Suporte para snippets
+        { "L3MON4D3/LuaSnip" },         -- Engine de snippets
+        { "mfussenegger/nvim-jdtls" },
+        { "mfussenegger/nvim-dap" },
+        { "rcarriga/nvim-dap-ui" },
     },
     config = function()
         -- Configurar o nvim-cmp utilizando a função que retorna a tabela
@@ -61,4 +64,3 @@ return {
         require("luasnip.loaders.from_vscode").lazy_load()
     end
 }
-
