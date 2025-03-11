@@ -1,4 +1,3 @@
--- Arquivo: lua/plugins/cmp.lua
 -- Configuração completa do nvim-cmp com suporte para snippets, LSP e buffer
 
 -- Função que retorna a configuração de nvim-cmp como uma tabela
@@ -10,7 +9,7 @@ local function get_cmp_config()
         snippet = {
             -- Expansão de snippet usando LuaSnip
             expand = function(args)
-                require("luasnip").lsp_expand(args.body)
+                luasnip.lsp_expand(args.body)
             end,
         },
         mapping = cmp.mapping.preset.insert({
@@ -52,9 +51,9 @@ return {
         { "hrsh7th/cmp-nvim-lua" },     -- Sugestões para Lua no Neovim
         { "saadparwaiz1/cmp_luasnip" }, -- Suporte para snippets
         { "L3MON4D3/LuaSnip" },         -- Engine de snippets
-        { "mfussenegger/nvim-jdtls" },
-        { "mfussenegger/nvim-dap" },
-        { "rcarriga/nvim-dap-ui" },
+        { "mfussenegger/nvim-jdtls" },  -- Suporte ao JDTLS para Java
+        { "mfussenegger/nvim-dap" },    -- Suporte ao Debug Adapter Protocol (DAP)
+        { "rcarriga/nvim-dap-ui" },     -- Interface para o DAP
     },
     config = function()
         -- Configurar o nvim-cmp utilizando a função que retorna a tabela

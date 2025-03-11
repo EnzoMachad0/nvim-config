@@ -65,15 +65,15 @@ return {
         end
     },
     {
-        "jose-elias-alvarez/null-ls.nvim",
+        "nvimtools/none-ls.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
         config = function()
-            local null_ls = require("null-ls")
-            null_ls.setup({
+            local none_ls = require("none-ls")
+            none_ls.setup({
                 sources = {
-                    null_ls.builtins.formatting.prettier,     -- Formatação com Prettier
-                    null_ls.builtins.formatting.clang_format, -- Formatação com Clang
-                    null_ls.builtins.diagnostics.eslint,      -- Linter com ESLint
+                    none_ls.builtins.formatting.prettier,     -- Formatação com Prettier
+                    none_ls.builtins.formatting.clang_format, -- Formatação com Clang
+                    none_ls.builtins.diagnostics.eslint,      -- Linter com ESLint
                 },
                 on_attach = function(client, bufnr)
                     -- Autoformatação ao salvar
